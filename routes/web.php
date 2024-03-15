@@ -23,7 +23,7 @@ Route::get('/', function () {
 Route::get('/bankuser', [BankUserController::class, 'index']);
 Route::post('/bankuser', [BankUserController::class, 'store']);
 Route::put('/bankuser/{id}', [BankUserController::class, 'update']);
-
+Route::delete('/bankuser/{id}', [BankUserController::class, 'destroy']);
 Route::get('/hello', function () {
     return '<h1>hello</h1>';
 });

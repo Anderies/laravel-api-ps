@@ -17,7 +17,8 @@ class BankUserController extends Controller
 
     public function index()
     {
-        return BankUser::all();
+        $users = BankUser::all();
+        return $this->sendResponse($users, "Data loaded successfully!");
     }
 
     /**
@@ -33,8 +34,9 @@ class BankUserController extends Controller
                 'phone_number' => 'required'
             ]);
 
-            if($validator->fails()){
-                return response()->json(['error' => $validator->errors()]);
+            if ($validator->fails()) {
+                $error = $validator->errors();
+                return $this->sendError($error, "Please check your input.");
             }
 
             // Insert data to Database using Eloquent
@@ -75,6 +77,19 @@ class BankUserController extends Controller
     {
         //
         try{
+            $validator = Validator::make(['id' => $id],[
+                'id' => 'required|exists:bankuser,user_id'
+            ]);
+
+            if($validator->fails()){
+                return response()->json(['error' => $validator->errors()]);
+            }
+
+            $user = BankUser::findOrFail($id);
+            // delete user
+            $user->delete();
+            return response()->json(['message' =>
+            "$user->user_id user is deleted sucessfully"]);
 
         }catch(Exception $e){
             return response()->json(['message' => 'Error occured ' . $e->getMessage()], 500);
