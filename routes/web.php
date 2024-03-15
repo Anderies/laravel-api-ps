@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BankUser;
+use App\Http\Controllers\Api\BankUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +20,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/bankuser', [BankUser::class, 'index']);
-Route::post('/bankuser', [BankUser::class, 'store']);
-Route::put('/bankuser/{id}', [BankUser::class, 'update']);
+Route::get('/bankuser', [BankUserController::class, 'index']);
+Route::post('/bankuser', [BankUserController::class, 'store']);
+Route::put('/bankuser/{id}', [BankUserController::class, 'update']);
 
 Route::get('/hello', function () {
     return '<h1>hello</h1>';
